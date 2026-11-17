@@ -3,6 +3,11 @@
 
 **Amethyst Bound** is a simple, vanilla friendly extension mod that gives you even more uses for Amethyst! To make things vanilla friendly, tools keep the same vanilla look, and the recipes are exactly the same!
 
+---
+### This is the Wiki, Issue Tracker, and another area to view and get my mods!
+
+---
+
 ### This includes:
 -  Amethyst Tools that are a great in between for iron and diamond
 -  Amethyst Armor that is also a great in-between for iron and diamond. (Including a new Dagger for those who like smaller swords!)
