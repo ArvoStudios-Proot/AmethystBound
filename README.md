@@ -25,9 +25,10 @@
 -  Bug fixes for certain mechanics
 -  More Advancements
 
-### Add-on's
+### Add-on's:
 > Amethyst Bound: Java Edition | 3D Tools Add-on 
 > *This mod gives the tools in this mod a vanilla friendly 3D look!*
+> 
 > **This resource pack is under review, so its not available... Yet!**
 
 ---
@@ -36,6 +37,7 @@
  **Bugs or Problems?** Let me know by sending me a message to any of my socials, or join the server and send a bug report inside of Amethyst Bound!
 #### My Socials!
 [Instagram](https://www.instagram.com/arvorennix) | [Threads](https://www.threads.com/arvorennix) | [Linktree](https://www.linktr.ee/arvorennix) | [TikTok](https://www.tiktok.com/@arvorennix) | [Discord Server](https://discord.gg/zddQ54C57x) | [YouTube](https://www.youtube.com/@arvorennix)
+
 ***Feel free to use my mod in your modpacks!***
 
 ---
