@@ -103,6 +103,7 @@
       transform: translateX(-50%) translateY(0) scale(1);
       pointer-events: auto;
     }
+
     .hint-ticker-track {
       display: flex;
       gap: 0.45rem;
@@ -113,6 +114,7 @@
     .hint-ticker-track::-webkit-scrollbar {
       display: none;
     }
+
     @keyframes islandResultPop {
       from { opacity: 0; transform: translateY(6px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
@@ -178,6 +180,14 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ==================== MATERIAL 3 (M3) EXPANDING GALLERY ==================== */
+    .m3-gallery-slide {
+      transition: flex 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+    }
+    .m3-gallery-slide:not(.is-active) {
+      filter: brightness(0.65) saturate(0.8);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amethyst-500 selection:text-white">
@@ -186,8 +196,14 @@
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-modrinth-bg/90 border-b border-modrinth-border">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
       
-      <!-- Left: Logo & Wiki Title -->
+      <!-- Left: Mobile Menu Trigger & Logo -->
       <div class="flex items-center gap-3 shrink-0">
+        <button id="mobileMenuBtn" type="button" aria-label="Open mobile navigation" class="lg:hidden p-2 rounded-xl bg-modrinth-card border border-modrinth-border text-modrinth-muted hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
         <a href="#" class="flex items-center gap-2.5 group">
           <div class="w-9 h-9 rounded-xl asset-frame flex items-center justify-center p-1.5 group-hover:border-amethyst-500 transition">
             <img src="images/mod-icon.png" alt="Amethyst Bound Logo" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
@@ -270,7 +286,11 @@
           <span class="w-2 h-2 rounded-full bg-amethyst-400 animate-pulse"></span>
           <span>MC 26.1.2 – 26.3</span>
         </div>
+
         <a id="link-modrinth-header" href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-amethyst-500 hover:bg-amethyst-600 text-white font-semibold text-xs sm:text-sm shadow-md shadow-amethyst-900/40 transition">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
           <span>Modrinth Page</span>
         </a>
       </div>
@@ -278,12 +298,40 @@
     </div>
   </header>
 
+  <!-- ==================== MOBILE NAVIGATION DRAWER ==================== -->
+  <div id="mobileNavBackdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden lg:hidden"></div>
+  <div id="mobileNavDrawer" class="fixed inset-y-0 left-0 w-72 bg-modrinth-card border-r border-modrinth-border z-50 p-5 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col justify-between">
+    <div>
+      <div class="flex items-center justify-between pb-4 mb-4 border-b border-modrinth-border">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg asset-frame flex items-center justify-center p-1">
+            <img src="images/mod-icon.png" alt="Logo" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+          </div>
+          <span class="text-sm font-bold text-white">Wiki Navigation</span>
+        </div>
+        <button id="closeMobileNavBtn" type="button" aria-label="Close mobile navigation" class="p-1.5 rounded-lg bg-modrinth-bg text-modrinth-muted hover:text-white">✕</button>
+      </div>
+      <nav class="space-y-1.5 text-sm font-medium">
+        <a href="#overview" class="mobile-nav-link block p-2.5 rounded-xl bg-modrinth-bg text-white">Overview &amp; Features</a>
+        <a href="#requirements" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Mod Requirements</a>
+        <a href="#gallery" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Screenshot Gallery</a>
+        <a href="#crafting" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Crafting Recipes</a>
+        <a href="#items-catalog" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Items &amp; Stats Catalog</a>
+        <a href="#advancements" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Advancements</a>
+        <a href="#addons" class="mobile-nav-link block p-2.5 rounded-xl text-modrinth-muted hover:bg-modrinth-bg hover:text-white">Add-ons &amp; Compatibility</a>
+      </nav>
+    </div>
+    <div class="text-[11px] text-modrinth-muted text-center pt-4 border-t border-modrinth-border">
+      Amethyst Bound v1.2 • MC 26.1.2+
+    </div>
+  </div>
+
   <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
   <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 sm:py-8 w-full flex-1">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       
-      <!-- SIDEBAR NAVIGATION -->
-      <aside class="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+      <!-- SIDEBAR NAVIGATION (DESKTOP) -->
+      <aside class="hidden lg:block lg:col-span-3 lg:sticky lg:top-24 space-y-4">
         <div class="p-4 sm:p-5 rounded-2xl bg-modrinth-card border border-modrinth-border shadow-sm">
           <h3 class="text-xs font-bold uppercase tracking-wider text-amethyst-300 mb-3">Wiki Navigation</h3>
           <nav class="space-y-1 text-xs sm:text-sm font-medium">
@@ -295,61 +343,205 @@
               <span>Mod Requirements</span>
               <span class="text-xs text-modrinth-muted font-mono">02</span>
             </a>
+            <a href="#gallery" class="wiki-nav-link flex items-center justify-between p-2 rounded-xl text-modrinth-text hover:bg-modrinth-elevated hover:text-white transition">
+              <span>Screenshot Gallery</span>
+              <span class="text-xs text-modrinth-muted font-mono">03</span>
+            </a>
             <a href="#crafting" class="wiki-nav-link flex items-center justify-between p-2 rounded-xl text-modrinth-text hover:bg-modrinth-elevated hover:text-white transition">
               <span>Crafting Recipes</span>
-              <span class="text-xs text-modrinth-muted font-mono">03</span>
+              <span class="text-xs text-modrinth-muted font-mono">04</span>
             </a>
             <a href="#items-catalog" class="wiki-nav-link flex items-center justify-between p-2 rounded-xl text-modrinth-text hover:bg-modrinth-elevated hover:text-white transition">
               <span>Items &amp; Stats Catalog</span>
-              <span class="text-xs text-modrinth-muted font-mono">04</span>
+              <span class="text-xs text-modrinth-muted font-mono">05</span>
             </a>
             <a href="#advancements" class="wiki-nav-link flex items-center justify-between p-2 rounded-xl text-modrinth-text hover:bg-modrinth-elevated hover:text-white transition">
               <span>Advancements</span>
-              <span class="text-xs text-modrinth-muted font-mono">05</span>
+              <span class="text-xs text-modrinth-muted font-mono">06</span>
+            </a>
+            <a href="#addons" class="wiki-nav-link flex items-center justify-between p-2 rounded-xl text-modrinth-text hover:bg-modrinth-elevated hover:text-white transition">
+              <span>Add-ons &amp; Compatibility</span>
+              <span class="text-xs text-modrinth-muted font-mono">07</span>
             </a>
           </nav>
+        </div>
+
+        <!-- Creator & Socials Card -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-modrinth-card border border-modrinth-border space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl asset-frame overflow-hidden shrink-0 flex items-center justify-center p-1">
+              <img src="images/avatar.png" alt="@arvorennix avatar" class="w-full h-full object-cover rounded-lg" onerror="this.src='images/mod-icon.png'" />
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">@arvorennix</div>
+              <div class="text-[10px] text-modrinth-muted">Mod Author &amp; Creator</div>
+            </div>
+          </div>
+          <div class="text-xs text-modrinth-muted space-y-1">
+            <div class="flex justify-between"><span>Project ID:</span> <span class="font-mono text-white">amethyst-bound</span></div>
+            <div class="flex justify-between"><span>License:</span> <span class="font-mono text-white">MIT / All Rights</span></div>
+            <div class="flex justify-between"><span>Client Support:</span> <span class="font-mono text-amethyst-300">Client &amp; Server</span></div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs font-medium pt-1">
+            <a id="link-discord-sidebar" href="#" target="_blank" rel="noopener noreferrer" class="col-span-2 flex flex-col items-center justify-center text-center py-2.5 px-3 rounded-xl bg-amethyst-500/15 border border-amethyst-500/35 text-amethyst-200 hover:bg-amethyst-500 hover:text-white transition">
+              <span class="font-bold">Discord Server</span>
+              <span class="text-[10px] opacity-85">(Community &amp; Support)</span>
+            </a>
+            <a id="link-github-sidebar" href="#" target="_blank" rel="noopener noreferrer" class="col-span-2 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-modrinth-bg border border-modrinth-border text-white hover:border-amethyst-500 hover:bg-modrinth-elevated transition">
+              <span>GitHub Issues</span>
+            </a>
+          </div>
         </div>
       </aside>
 
       <!-- MAIN ARTICLE SECTION -->
       <main class="lg:col-span-9 space-y-6">
         
-        <!-- 1. OVERVIEW -->
-        <section id="overview" class="p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
-          <div class="flex items-center gap-2.5 pb-4 mb-4 border-b border-modrinth-border">
-            <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white">Amethyst Bound Wiki</h1>
+        <!-- 1. HERO / OVERVIEW SECTION -->
+        <section id="overview" class="wiki-section mr-card p-6 sm:p-8 rounded-2xl bg-modrinth-card border border-modrinth-border relative overflow-hidden">
+          <div class="absolute -right-16 -top-16 w-64 h-64 bg-amethyst-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div class="space-y-3 max-w-2xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amethyst-500/15 border border-amethyst-500/30 text-amethyst-300 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full bg-amethyst-400 animate-pulse"></span>
+                Featured Modrinth Wiki Release
+              </div>
+              <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Amethyst Bound</h1>
+              <p class="text-modrinth-muted text-sm sm:text-base leading-relaxed">
+                Elevate your Minecraft progression by turning abundant Amethyst Shards into a reliable mid-tier gear set that bridges the exact gap between Iron and Diamond.
+              </p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <span class="px-2.5 py-1 rounded-lg bg-modrinth-bg border border-modrinth-border text-xs font-mono text-modrinth-text">Fabric 26.1.2+</span>
+                <span class="px-2.5 py-1 rounded-lg bg-modrinth-bg border border-modrinth-border text-xs font-mono text-modrinth-text">Client &amp; Server</span>
+                <span class="px-2.5 py-1 rounded-lg bg-modrinth-bg border border-modrinth-border text-xs font-mono text-amethyst-300">12 Unique Items</span>
+              </div>
+            </div>
+
+            <!-- Modrinth Action Button -->
+            <div class="shrink-0">
+              <a id="link-modrinth-hero" href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-amethyst-500 hover:bg-amethyst-600 text-white font-semibold text-sm shadow-lg shadow-amethyst-900/50 transition">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <span>View on Modrinth</span>
+              </a>
+            </div>
           </div>
-          <p class="text-modrinth-muted text-sm leading-relaxed">
-            Welcome to the official community wiki for <strong>Amethyst Bound</strong>. This mod bridges the gap between Iron and Diamond tiers by introducing a complete suite of crystal-infused gear, weapons, armor sets, and mount barding.
-          </p>
         </section>
 
-        <!-- 2. REQUIREMENTS -->
-        <section id="requirements" class="p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+        <!-- 2. REQUIREMENTS SECTION -->
+        <section id="requirements" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
           <div class="flex items-center gap-2.5 pb-4 mb-4 border-b border-modrinth-border">
             <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
             <h2 class="text-xl sm:text-2xl font-bold text-white">Mod Requirements</h2>
           </div>
           <p class="text-modrinth-muted text-sm leading-relaxed mb-4">
-            Amethyst Bound requires the <strong>Fabric API</strong> to be installed in your client and server mods folder for Minecraft versions 26.1.2 through 26.3.
+            Before installing <em>Amethyst Bound</em>, ensure your instance meets the following loader and dependency prerequisites:
           </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-10 h-10 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/fabric-icon.png" alt="Fabric API" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-sm font-bold text-white">Fabric API (Required)</h3>
+                <p class="text-xs text-modrinth-muted mt-0.5">Mandatory core dependency. Place in your <code class="text-amethyst-300 font-mono">/mods</code> folder.</p>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-10 h-10 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/mod-icon.png" alt="Minecraft Version" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-sm font-bold text-white">Minecraft 26.1.2 – 26.3</h3>
+                <p class="text-xs text-modrinth-muted mt-0.5">Fully tested and optimized for Fabric loader on current MC versions.</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <!-- 3. CRAFTING & 4. CATALOG -->
-        <section id="crafting" class="p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+        <!-- 3. SCREENSHOT GALLERY SECTION (M3 EXPANDING GALLERY) -->
+        <section id="gallery" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+          <div class="flex items-center justify-between gap-2 pb-4 mb-4 border-b border-modrinth-border">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">Screenshot Gallery</h2>
+            </div>
+            <span class="text-xs font-mono text-modrinth-muted">Hover or click to expand</span>
+          </div>
+
+          <!-- M3 Expanding Horizontal Gallery Track -->
+          <div class="flex flex-col sm:flex-row gap-3 h-auto sm:h-80 w-full" id="m3GalleryContainer">
+            <!-- Slide 1 -->
+            <div class="m3-gallery-slide is-active relative flex-1 sm:hover:flex-[2.5] rounded-2xl overflow-hidden asset-frame cursor-pointer h-56 sm:h-auto transition-all duration-500 group">
+              <img src="images/gallery-1.png" alt="Amethyst Tools in Action" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.style.opacity='0'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amethyst-300">Gear Showcase</span>
+                <h3 class="text-sm font-bold text-white">Full Crystal Armor &amp; Sword Set</h3>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="m3-gallery-slide relative flex-1 sm:hover:flex-[2.5] rounded-2xl overflow-hidden asset-frame cursor-pointer h-56 sm:h-auto transition-all duration-500 group">
+              <img src="images/gallery-2.png" alt="Amethyst Dagger PvP" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.style.opacity='0'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amethyst-300">Combat Mechanics</span>
+                <h3 class="text-sm font-bold text-white">Fast Amethyst Dagger Strikes</h3>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="m3-gallery-slide relative flex-1 sm:hover:flex-[2.5] rounded-2xl overflow-hidden asset-frame cursor-pointer h-56 sm:h-auto transition-all duration-500 group">
+              <img src="images/gallery-3.png" alt="Mount Barding" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.style.opacity='0'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amethyst-300">Mount Barding</span>
+                <h3 class="text-sm font-bold text-white">Horse &amp; Nautilus Armor Protection</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. CRAFTING RECIPES SECTION -->
+        <section id="crafting" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
           <div class="flex items-center gap-2.5 pb-4 mb-4 border-b border-modrinth-border">
             <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
-            <h2 class="text-xl sm:text-2xl font-bold text-white">Crafting &amp; Recipes</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Crafting Recipes &amp; Patterns</h2>
           </div>
-          <p class="text-modrinth-muted text-sm leading-relaxed mb-4">
-            All tools and armor follow intuitive vanilla crafting shapes using Amethyst Shards and sticks.
+          <p class="text-modrinth-muted text-sm leading-relaxed mb-5">
+            All Amethyst tools and armor pieces utilize familiar vanilla crafting table layouts, replacing iron ingots or diamonds directly with <strong>Amethyst Shards</strong>.
           </p>
+
+          <!-- Dagger Crafting Grid Note -->
+          <div class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amethyst-300">Crafting Note</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Vanilla Patterns + Amethyst Dagger</h3>
+              <p class="text-xs text-modrinth-muted mt-1 max-w-md">
+                Standard tools and armor pieces use exact vanilla shapes. The <strong>Amethyst Dagger</strong> crafts cleanly with 1 Amethyst Shard above 1 Stick.
+              </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <div class="grid grid-cols-3 gap-1 w-28">
+                <div class="mc-slot"></div><div class="mc-slot"></div><div class="mc-slot"></div>
+                <div class="mc-slot"></div>
+                <div class="mc-slot mc-slot-filled" title="Amethyst Shard">
+                  <img src="images/item-amethyst-shard.png" alt="Amethyst Shard" class="w-5 h-5 object-contain pixelated-art" onerror="this.style.opacity='0'" />
+                </div>
+                <div class="mc-slot"></div>
+                <div class="mc-slot"></div>
+                <div class="mc-slot mc-slot-filled" title="Stick">
+                  <img src="images/item-stick.png" alt="Stick" class="w-5 h-5 object-contain pixelated-art" onerror="this.style.opacity='0'" />
+                </div>
+                <div class="mc-slot"></div>
+              </div>
+              <span class="text-modrinth-muted font-bold">→</span>
+              <div class="w-12 h-12 rounded-lg asset-frame p-2 flex items-center justify-center" title="Amethyst Dagger">
+                <img src="images/item-dagger.png" alt="Amethyst Dagger" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+            </div>
+          </div>
         </section>
 
-        <!-- ITEMS CATALOG -->
-        <section id="items-catalog" class="p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-modrinth-border">
+        <!-- 5. ITEMS & STATS CATALOG -->
+        <section id="items-catalog" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-2 border-b border-modrinth-border">
             <div>
               <div class="flex items-center gap-2.5">
                 <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
@@ -357,29 +549,19 @@
               </div>
               <p class="text-xs text-modrinth-muted mt-1">Click any item card to open its full recipe, rarity &amp; stats inspect view.</p>
             </div>
+
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap gap-1.5" id="catalogFilterTabs">
+              <button type="button" data-filter="all" class="catalog-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-amethyst-500 text-white transition">All (12)</button>
+              <button type="button" data-filter="tools" class="catalog-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-modrinth-bg border border-modrinth-border text-modrinth-muted hover:text-white transition">Tools &amp; Weapons (6)</button>
+              <button type="button" data-filter="armor" class="catalog-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-modrinth-bg border border-modrinth-border text-modrinth-muted hover:text-white transition">Player Armor (4)</button>
+              <button type="button" data-filter="mounts" class="catalog-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-modrinth-bg border border-modrinth-border text-modrinth-muted hover:text-white transition">Mount Armor (2)</button>
+            </div>
           </div>
 
           <div id="itemsCatalogGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-4">
-            <!-- Example Card: Dagger -->
-            <div id="card-item-dagger" data-item-id="dagger" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-amethyst-500/45 hover:border-amethyst-400 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5">
-              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
-                <img src="images/item-dagger.png" alt="Amethyst Dagger" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
-              </div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Dagger</h3>
-                  <span class="px-2 py-0.5 rounded bg-amethyst-500/25 text-amethyst-200 text-[10px] font-bold shrink-0">Uncommon</span>
-                </div>
-                <p class="text-xs text-modrinth-muted mt-1">A smaller, compact blade designed for players who prefer fast close-range strikes.</p>
-                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
-                  <span>1 Shard + 1 Stick</span>
-                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Example Card: Sword -->
-            <div id="card-item-sword" data-item-id="sword" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5">
+            <!-- 1. Amethyst Sword -->
+            <div id="card-item-sword" data-item-id="sword" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
               <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
                 <img src="images/item-sword.png" alt="Amethyst Sword" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
               </div>
@@ -388,9 +570,207 @@
                   <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Sword</h3>
                   <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
                 </div>
-                <p class="text-xs text-modrinth-muted mt-1">Classic vanilla-styled blade offering balanced damage right between Iron and Diamond.</p>
+                <p class="text-xs text-modrinth-muted mt-1">Vanilla-styled crystal sword with damage and durability between Iron and Diamond.</p>
                 <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
                   <span>2 Shards + 1 Stick</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Amethyst Dagger -->
+            <div id="card-item-dagger" data-item-id="dagger" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-amethyst-500/45 hover:border-amethyst-400 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-dagger.png" alt="Amethyst Dagger" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Dagger</h3>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/25 text-amethyst-200 text-[10px] font-bold shrink-0">Uncommon</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">A smaller, compact blade designed for players who prefer smaller swords.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>1 Shard + 1 Stick</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Amethyst Pickaxe -->
+            <div id="card-item-pickaxe" data-item-id="pickaxe" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-pickaxe.png" alt="Amethyst Pickaxe" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Pickaxe</h3>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-text text-[10px] font-semibold shrink-0">Common</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Upgraded mining speed and durability sitting right between Iron and Diamond.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>3 Shards + 2 Sticks</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Amethyst Axe -->
+            <div id="card-item-axe" data-item-id="axe" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-axe.png" alt="Amethyst Axe" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Axe</h3>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-text text-[10px] font-semibold shrink-0">Common</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Chops wood quickly and packs a heavy mid-tier cleave between Iron and Diamond.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>3 Shards + 2 Sticks</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Amethyst Shovel -->
+            <div id="card-item-shovel" data-item-id="shovel" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-shovel.png" alt="Amethyst Shovel" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Shovel</h3>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-text text-[10px] font-semibold shrink-0">Common</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Digs dirt, sand, gravel, and snow smoothly with Iron-to-Diamond durability.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>1 Shard + 2 Sticks</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Amethyst Hoe -->
+            <div id="card-item-hoe" data-item-id="hoe" data-category="tools" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-hoe.png" alt="Amethyst Hoe" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Hoe</h3>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-text text-[10px] font-semibold shrink-0">Common</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Tills soil and clears foliage with balanced mid-tier speed and durability.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>2 Shards + 2 Sticks</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Amethyst Helmet -->
+            <div id="card-item-helmet" data-item-id="helmet" data-category="armor" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-helmet.png" alt="Amethyst Helmet" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Helmet</h3>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Head protection sitting cleanly between Iron and Diamond defense ratings.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>5 Amethyst Shards</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Amethyst Chestplate -->
+            <div id="card-item-chestplate" data-item-id="chestplate" data-category="armor" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-chestplate.png" alt="Amethyst Chestplate" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Chestplate</h3>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Heavy crystal chest armor crafted with the standard 8-shard vanilla layout.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>8 Amethyst Shards</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. Amethyst Leggings -->
+            <div id="card-item-leggings" data-item-id="leggings" data-category="armor" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-leggings.png" alt="Amethyst Leggings" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Leggings</h3>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Durable leg protection bridging the gap between Iron and Diamond armor.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>7 Amethyst Shards</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. Amethyst Boots -->
+            <div id="card-item-boots" data-item-id="boots" data-category="armor" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-boots.png" alt="Amethyst Boots" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Boots</h3>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Completes the full 4-piece Amethyst Armor set with vanilla styling.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>4 Amethyst Shards</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 11. Amethyst Horse Armor -->
+            <div id="card-item-horse-armor" data-item-id="horse-armor" data-category="mounts" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-horsearmor.png" alt="Amethyst Horse Armor" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Horse Armor</h3>
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 text-[10px] font-semibold shrink-0">Rare</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Equippable crystal barding to protect your horse on overland journeys.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>Mount Slot: Horse</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 12. Amethyst Nautilus Armor -->
+            <div id="card-item-nautilus-armor" data-item-id="nautilus-armor" data-category="mounts" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-amethyst-500/45 hover:border-amethyst-400 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/item-nautilus.png" alt="Amethyst Nautilus Armor" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Nautilus Armor</h3>
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 text-[10px] font-semibold shrink-0">Rare</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Matching Amethyst shell armor crafted specifically for your Nautilus companion.</p>
+                <div class="mt-2 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>Mount Slot: Nautilus</span>
                   <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
                 </div>
               </div>
@@ -398,15 +778,118 @@
           </div>
         </section>
 
-        <!-- 5. ADVANCEMENTS -->
-        <section id="advancements" class="p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+        <!-- 6. ADVANCEMENTS SECTION -->
+        <section id="advancements" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
+          <div class="flex items-center justify-between gap-2 pb-4 mb-5 border-b border-modrinth-border">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">Advancements</h2>
+            </div>
+            <span class="text-xs font-mono text-modrinth-muted">wiki/advancements</span>
+          </div>
+          <p class="text-modrinth-muted text-sm leading-relaxed mb-5">
+            <em>Amethyst Bound</em> rewards you with custom advancements as you acquire each item, tool, armor piece, and mount upgrade!
+          </p>
+
+          <div class="asset-frame w-full h-56 sm:h-72 rounded-2xl mb-6 flex items-center justify-center">
+            <img src="images/advancement-tree.png" alt="Amethyst Bound Advancement Tree" class="w-full h-full object-cover" onerror="this.style.opacity='0'" />
+          </div>
+
+          <h3 class="text-xs font-bold uppercase tracking-wider text-amethyst-300 mb-3">Advancement Details &amp; Unlock Criteria</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div id="adv-card-root" class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/adv-root.png" alt="Root" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Amethyst Bound</h4>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/20 text-amethyst-300 text-[10px] font-bold">Root</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Begin your crystalline journey by obtaining an Amethyst Shard.</p>
+                <p class="text-[11px] font-mono text-amethyst-300 mt-1.5">Trigger: Collect an Amethyst Shard</p>
+              </div>
+            </div>
+
+            <div id="adv-card-tools" class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/adv-tools.png" alt="Tools" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Crystal Tools</h4>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-muted text-[10px] font-semibold">Task</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft Amethyst tools to bridge the gap between Iron and Diamond.</p>
+                <p class="text-[11px] font-mono text-amethyst-300 mt-1.5">Trigger: Acquire Amethyst Tools</p>
+              </div>
+            </div>
+
+            <div id="adv-card-dagger" class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/adv-dagger.png" alt="Dagger" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Compact &amp; Deadly</h4>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/20 text-amethyst-300 text-[10px] font-bold">Goal</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft the signature Amethyst Dagger for close-quarters combat.</p>
+                <p class="text-[11px] font-mono text-amethyst-300 mt-1.5">Trigger: Acquire the Amethyst Dagger</p>
+              </div>
+            </div>
+
+            <div id="adv-card-armor" class="p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/adv-armor.png" alt="Armor" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Covered in Crystals</h4>
+                  <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">Challenge</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Acquire and equip a complete set of Amethyst Armor.</p>
+                <p class="text-[11px] font-mono text-amethyst-300 mt-1.5">Trigger: Full Amethyst Armor Set</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. ADD-ONS & 2D VS 3D SLIDER SECTION -->
+        <section id="addons" class="wiki-section mr-card p-6 sm:p-7 rounded-2xl bg-modrinth-card border border-modrinth-border">
           <div class="flex items-center gap-2.5 pb-4 mb-4 border-b border-modrinth-border">
             <span class="w-2.5 h-6 rounded-full bg-amethyst-500"></span>
-            <h2 class="text-xl sm:text-2xl font-bold text-white">Advancements</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Add-ons &amp; Compatibility</h2>
           </div>
-          <p class="text-modrinth-muted text-sm leading-relaxed">
-            Amethyst Bound rewards you with custom advancements as you acquire each item and tool upgrade!
+          <p class="text-modrinth-muted text-sm leading-relaxed mb-4">
+            Amethyst Bound includes an official companion resource pack for 3D model tools. Test the difference below:
           </p>
+
+          <!-- 2D vs 3D Comparison Slider -->
+          <div id="m3CompareSlider" class="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden asset-frame select-none cursor-ew-resize">
+            <!-- After Layer (3D Mode) -->
+            <div class="absolute inset-0">
+              <img src="images/tool-3d.png" alt="3D Model Tools" class="w-full h-full object-cover pointer-events-none" onerror="this.style.opacity='0'" />
+              <div class="absolute bottom-4 right-4 px-3 py-1 rounded-lg bg-black/70 backdrop-blur-md text-xs font-bold text-amethyst-300 border border-amethyst-500/30">
+                3D Models (Companion Pack)
+              </div>
+            </div>
+            <!-- Before Layer (2D Vanilla Mode) -->
+            <div id="m3BeforeLayer" class="absolute inset-y-0 left-0 overflow-hidden" style="width: 50%;">
+              <div class="absolute inset-y-0 left-0 w-[var(--slider-w,600px)]">
+                <img src="images/tool-2d.png" alt="2D Flat Tools" class="w-full h-full object-cover pointer-events-none" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="absolute bottom-4 left-4 px-3 py-1 rounded-lg bg-black/70 backdrop-blur-md text-xs font-bold text-white border border-modrinth-border">
+                2D Flat (Default)
+              </div>
+            </div>
+            <!-- Interactive Handle Bar -->
+            <div id="m3CompareHandle" class="absolute inset-y-0 w-1 bg-amethyst-400 shadow-[0_0_12px_#c084fc] pointer-events-none" style="left: 50%;">
+              <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-amethyst-500 border-2 border-white flex items-center justify-center shadow-lg text-white text-xs font-bold">
+                ↔
+              </div>
+            </div>
+          </div>
         </section>
 
       </main>
@@ -421,8 +904,13 @@
 
   <!-- ==================== FOOTER ==================== -->
   <footer class="border-t border-modrinth-border bg-modrinth-card/50 mt-12">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 text-xs text-modrinth-muted text-center">
-      Amethyst Bound Wiki • Created &amp; maintained by @arvorennix.
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-modrinth-muted">
+      <div>
+        <span class="font-semibold text-white">Amethyst Bound Wiki</span> • Created &amp; maintained by <span class="text-amethyst-400 font-medium">@arvorennix</span>.
+      </div>
+      <div>
+        Exclusively published on <span class="text-white font-medium">Modrinth</span> • Not affiliated with Mojang Studios or Microsoft.
+      </div>
     </div>
   </footer>
 
@@ -473,6 +961,27 @@
           description: 'Classic vanilla-styled blade offering balanced damage right between Iron and Diamond.',
           targetId: 'card-item-sword',
           keywords: 'sword weapon combat blade'
+        },
+        {
+          id: 'pickaxe',
+          isItem: true,
+          name: 'Amethyst Pickaxe',
+          category: 'Mining Tool',
+          rarity: 'Common',
+          rarityStyle: 'bg-modrinth-elevated text-modrinth-text border-modrinth-border',
+          icon: 'images/item-pickaxe.png',
+          tier: 'Between Iron & Diamond',
+          recipeText: '3 Amethyst Shards + 2 Sticks',
+          craftable: true,
+          grid: ['shard', 'shard', 'shard', '', 'stick', '', '', 'stick', ''],
+          stats: {
+            'Durability': '820 Uses',
+            'Mining Speed': '7.0',
+            'Mining Level': 'Iron Tier'
+          },
+          description: 'Mines stone and ores faster than Iron while keeping the exact vanilla shape.',
+          targetId: 'card-item-pickaxe',
+          keywords: 'pickaxe mining tool ores'
         }
       ];
 
@@ -614,7 +1123,7 @@
 
       if (searchInput) {
         searchInput.addEventListener('focus', openDynamicIsland);
-        searchInput.addEventListener('input', (e) => openDynamicIsland());
+        searchInput.addEventListener('input', () => openDynamicIsland());
       }
       if (closeIslandBtn) closeIslandBtn.addEventListener('click', closeDynamicIsland);
 
@@ -661,6 +1170,64 @@
           if (found) openItemMorphModal(found, card);
         });
       });
+
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const closeMobileNavBtn = document.getElementById('closeMobileNavBtn');
+      const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+      const mobileNavBackdrop = document.getElementById('mobileNavBackdrop');
+
+      function openMobileNav() {
+        if (!mobileNavDrawer || !mobileNavBackdrop) return;
+        mobileNavBackdrop.classList.remove('hidden');
+        mobileNavDrawer.classList.remove('-translate-x-full');
+      }
+
+      function closeMobileNav() {
+        if (!mobileNavDrawer || !mobileNavBackdrop) return;
+        mobileNavBackdrop.classList.add('hidden');
+        mobileNavDrawer.classList.add('-translate-x-full');
+      }
+
+      if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileNav);
+      if (closeMobileNavBtn) closeMobileNavBtn.addEventListener('click', closeMobileNav);
+      if (mobileNavBackdrop) mobileNavBackdrop.addEventListener('click', closeMobileNav);
+
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', closeMobileNav);
+      });
+
+      // M3 Comparison Slider
+      const compareSlider = document.getElementById('m3CompareSlider');
+      const compareBeforeLayer = document.getElementById('m3BeforeLayer');
+      const compareHandle = document.getElementById('m3CompareHandle');
+
+      if (compareSlider && compareBeforeLayer && compareHandle) {
+        let isDraggingSlider = false;
+        const syncSliderWidth = () => {
+          const width = compareSlider.getBoundingClientRect().width;
+          compareSlider.style.setProperty('--slider-w', `${width}px`);
+        };
+        syncSliderWidth();
+        window.addEventListener('resize', syncSliderWidth);
+
+        const updateSliderPosition = (clientX) => {
+          const rect = compareSlider.getBoundingClientRect();
+          const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+          const percent = (offsetX / rect.width) * 100;
+          compareBeforeLayer.style.width = `${percent}%`;
+          compareHandle.style.left = `${percent}%`;
+        };
+
+        compareSlider.addEventListener('mousedown', (e) => {
+          isDraggingSlider = true;
+          updateSliderPosition(e.clientX);
+        });
+        window.addEventListener('mousemove', (e) => {
+          if (isDraggingSlider) updateSliderPosition(e.clientX);
+        });
+        window.addEventListener('mouseup', () => { isDraggingSlider = false; });
+      }
     });
   </script>
 </body>
