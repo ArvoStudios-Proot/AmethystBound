@@ -344,7 +344,7 @@
     @media (max-width: 640px) {
       .m3-carousel {
         flex-direction: column;
-        height: 450px;
+        height: 500px;
       }
       .m3-carousel-item {
         min-height: 46px;
@@ -440,6 +440,9 @@
     @keyframes drawerIn { from { transform: translateX(-100%); opacity: .4; } }
     @keyframes fadeBackdrop { from { opacity: 0; } }
     .mm-detail { overscroll-behavior: contain; }
+    .recipe-tab { font-size: 11px; font-weight: 600; padding: .25rem .7rem; border-radius: 9999px; background: #1e2126; border: 1px solid #2b2f36; color: #9ca3af; transition: color .2s, background-color .25s, border-color .25s; }
+    .recipe-tab:hover { color: #fff; border-color: #5a189a; }
+    .recipe-tab.is-active { background: #9d4edd; border-color: #9d4edd; color: #fff; }
 
     /* ==================== ICON SIZING FIXES ==================== */
     .ir-icon { overflow: hidden; padding: .35rem; }
@@ -656,7 +659,7 @@
                     Fabric
                   </span>
                   <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amethyst-500 text-white border border-amethyst-400/70 shadow-sm shadow-amethyst-900/50">
-                    v1.16.12
+                    v1.33.40
                   </span>
                   <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-modrinth-bg text-modrinth-text border border-modrinth-border">
                     26.1.2
@@ -728,7 +731,7 @@
           <div id="m3ShowcaseCarousel" class="m3-carousel">
             <!-- Panel 1: Full Gear -->
             <div class="m3-carousel-item is-active asset-frame p-4 flex flex-col justify-between" tabindex="0" data-gallery-id="1" data-title="01 • Full Gear" data-desc="Player equipped in full Amethyst Armor wielding the signature Amethyst Dagger." data-img="images/showcase-1.png">
-              <img src="images/showcase-1.png" alt="Full Amethyst Gear Showcase" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out" onerror="this.style.opacity='0'" />
+              <img src="images/showcase-1.png" alt="Full Amethyst Gear Showcase" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out" style="object-position: 30% center;" onerror="this.style.opacity='0'" />
       
               <span class="m3-active-label relative z-10 self-start text-xs font-bold text-amethyst-200 drop-shadow">
                 01 • Full Gear
@@ -791,6 +794,23 @@
       
               <div class="m3-expanded-content">
                 <div class="text-xs sm:text-sm text-white truncate">Matching crystal protection for overland Horses and aquatic Nautiluses.</div>
+              </div>
+            </div>
+
+            <!-- Panel 5: Lights -->
+            <div class="m3-carousel-item asset-frame p-4 flex flex-col justify-between" tabindex="0" data-gallery-id="5" data-title="05 • Lights" data-desc="The Amethyst Torch, Lantern, and Bulb: three tiers of crystal light." data-img="images/showcase-5.png">
+              <img src="images/showcase-5.png" alt="Amethyst Torch, Lantern and Bulb" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out" style="object-position: 42% center;"  onerror="this.style.opacity='0'" />
+      
+              <span class="m3-active-label relative z-10 self-start text-xs font-bold text-amethyst-200 drop-shadow">
+                05 • Lights
+              </span>
+      
+              <div class="m3-collapsed-label relative z-10 m-auto text-xs font-bold text-amethyst-200 drop-shadow">
+                05 • Lights
+              </div>
+      
+              <div class="m3-expanded-content">
+                <div class="text-xs sm:text-sm text-white truncate">The Amethyst Torch, Lantern, and Bulb: three tiers of crystal light.</div>
               </div>
             </div>
           </div>
@@ -1128,6 +1148,86 @@
               </div>
             </div>
 
+            <!-- 13. Amethyst Sliver -->
+            <div id="card-item-sliver" data-item-id="sliver" data-category="materials" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/amethyst-sliver.png" alt="Amethyst Sliver" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Sliver</h3>
+                    <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                  </div>
+                  <p class="text-xs text-modrinth-muted mt-1 leading-relaxed">Small crystal fragments split from a Shard, the key ingredient for Torches and Lanterns.</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>1 Shard → 9 Slivers</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 14. Amethyst Torch -->
+            <div id="card-item-torch" data-item-id="torch" data-category="lights" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/amethyst-torch.png" alt="Amethyst Torch" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Torch</h3>
+                    <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                  </div>
+                  <p class="text-xs text-modrinth-muted mt-1 leading-relaxed">Crystal-lit torch crafted from an Amethyst Sliver, 4 per craft with Coal or Charcoal.</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>Sliver + Coal/Charcoal + Stick</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 15. Amethyst Lantern -->
+            <div id="card-item-lantern" data-item-id="lantern" data-category="lights" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/amethyst-lantern.png" alt="Amethyst Lantern" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Lantern</h3>
+                    <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                  </div>
+                  <p class="text-xs text-modrinth-muted mt-1 leading-relaxed">Iron-framed lantern wrapped in Amethyst Slivers around a glowing Amethyst Torch.</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>4 Nuggets + 4 Slivers + Torch</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 16. Amethyst Bulb -->
+            <div id="card-item-bulb" data-item-id="bulb" data-category="lights" role="button" tabindex="0" class="catalog-item group cursor-pointer p-4 rounded-xl bg-modrinth-bg border border-modrinth-border hover:border-amethyst-500/70 hover:bg-modrinth-elevated/50 transition flex items-start gap-3.5 min-w-0">
+              <div class="w-16 h-16 shrink-0 rounded-xl asset-frame p-2.5 flex items-center justify-center group-hover:scale-105 transition">
+                <img src="images/amethyst-bulb.png" alt="Amethyst Bulb" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-sm font-bold text-white group-hover:text-amethyst-300 transition truncate">Amethyst Bulb</h3>
+                    <span class="px-2 py-0.5 rounded bg-amethyst-500/15 text-amethyst-300 text-[10px] font-semibold shrink-0">Uncommon</span>
+                  </div>
+                  <p class="text-xs text-modrinth-muted mt-1 leading-relaxed">The top tier of the Amethyst lights, built from a Lantern, Shards and Redstone Dust.</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-modrinth-border/70 flex items-center justify-between text-[11px] font-mono text-amethyst-300">
+                  <span>3 Shards + Lantern + Redstone</span>
+                  <span class="text-[10px] text-modrinth-muted group-hover:text-white">Inspect →</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -1150,7 +1250,7 @@
             <img src="images/advancement-tree.png" alt="Amethyst Bound Advancement Tree" class="w-full h-full object-cover" onerror="this.style.opacity='0'" />
           </div>
 
-          <!-- 7 Advancements Stacked in 7 Rows -->
+          <!-- 11 Advancements Stacked in Rows -->
           <h3 class="text-xs font-bold uppercase tracking-wider text-amethyst-300 mb-3">Advancement Milestones</h3>
           <div class="flex flex-col gap-3">
 
@@ -1252,6 +1352,62 @@
               </div>
             </div>
 
+            <!-- 8. Let There Be Light! -->
+            <div class="w-full p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/amethyst-torch.png" alt="Let There Be Light! Icon" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Let There Be Light!</h4>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-muted text-[10px] font-semibold">Task</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft an Amethyst Torch.</p>
+              </div>
+            </div>
+
+            <!-- 9. Let There Be More Light! -->
+            <div class="w-full p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/amethyst-lantern.png" alt="Let There Be More Light! Icon" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Let There Be More Light!</h4>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-muted text-[10px] font-semibold">Task</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft an Amethyst Lantern.</p>
+              </div>
+            </div>
+
+            <!-- 10. Let There Be Even More Light! -->
+            <div class="w-full p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/amethyst-bulb.png" alt="Let There Be Even More Light! Icon" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Let There Be Even More Light!</h4>
+                  <span class="px-2 py-0.5 rounded bg-modrinth-card text-modrinth-muted text-[10px] font-semibold">Task</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft an Amethyst Bulb.</p>
+              </div>
+            </div>
+
+            <!-- 11. Lighten Up! -->
+            <div class="w-full p-4 rounded-xl bg-modrinth-bg border border-modrinth-border flex items-start gap-3.5">
+              <div class="w-12 h-12 shrink-0 rounded-xl asset-frame p-2 flex items-center justify-center">
+                <img src="images/amethyst-bulb.png" alt="Lighten Up! Icon" class="w-full h-full object-contain pixelated-art" onerror="this.style.opacity='0'" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-bold text-white">Lighten Up!</h4>
+                  <span class="px-2 py-0.5 rounded bg-amethyst-500/20 text-amethyst-300 text-[10px] font-bold">Goal</span>
+                </div>
+                <p class="text-xs text-modrinth-muted mt-1">Craft every single type of Amethyst Light.</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -1277,7 +1433,7 @@
             </li>
             <li class="flex items-start gap-2.5">
               <span class="text-rose-400 font-bold mt-0.5">✕</span>
-              <span><strong class="text-white">Lights, Blocks, &amp; Other Items:</strong> Not in the current build (I'm not spoiling!).</span>
+              <span><strong class="text-white">Blocks &amp; Other Items:</strong> Not in the current build (I'm not spoiling!).</span>
             </li>
           </ul>
         </section>
@@ -1292,7 +1448,7 @@
           <ul class="space-y-3 text-xs sm:text-sm text-modrinth-muted">
             <li class="flex items-start gap-2.5">
               <span class="px-1.5 py-0.5 rounded bg-amethyst-500/20 text-amethyst-300 font-mono text-[10px] font-bold mt-0.5">PLANNED</span>
-              <span><strong class="text-white">Amethyst Light Blocks:</strong> Decorative glowing amethyst lighting blocks.</span>
+              <span><strong class="text-white">Armor Trims &amp; More Weapons:</strong> Smithing Table armor trim support and additional Amethyst weapons are planned.</span>
             </li>
             <li class="flex items-start gap-2.5">
               <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-[10px] font-bold mt-0.5">FIXES</span>
@@ -1468,7 +1624,7 @@
 
             <div class="flex items-center justify-between gap-2 py-1.5 border-b border-modrinth-border">
               <span class="text-modrinth-muted">Mod Version</span>
-              <span class="px-2 py-0.5 rounded-full bg-amethyst-500 text-white font-mono font-bold">v1.16.12</span>
+              <span class="px-2 py-0.5 rounded-full bg-amethyst-500 text-white font-mono font-bold">v1.33.40</span>
             </div>
 
             <div class="flex items-center justify-between gap-2 py-1.5 border-b border-modrinth-border">
@@ -1543,11 +1699,11 @@
               </svg>
               Last Wiki Updated
             </span>
-            <span class="px-2 py-0.5 rounded-md bg-amethyst-500/20 text-amethyst-300 font-mono text-[10px] font-semibold">Wiki v2.2</span>
+            <span class="px-2 py-0.5 rounded-md bg-amethyst-500/20 text-amethyst-300 font-mono text-[10px] font-semibold">Wiki v2.5</span>
           </div>
           <div class="text-sm font-bold text-white">November 18, 2026</div>
           <p class="text-xs text-modrinth-muted mt-1 leading-relaxed">
-            Updated with uniform uncommon item rarities, persistent layout view during item modal inspection, and Modrinth profile/addon links.</p>
+            Added the Amethyst Sliver, Amethyst Torch (Coal &amp; Charcoal recipes), Amethyst Lantern and Amethyst Bulb, four new lighting advancements, and a new &ldquo;05 &bull; Lights&rdquo; gallery panel.</p>
         </div>
 
         <!-- Creator & Socials Card -->
@@ -2021,6 +2177,98 @@
           keywords: 'nautilus ocean underwater mount shell armor rarity uncommon'
         },
         {
+          id: 'sliver',
+          isItem: true,
+          name: 'Amethyst Sliver',
+          category: 'Crafting Ingredient',
+          rarity: 'Uncommon',
+          rarityStyle: 'bg-amethyst-500/20 text-amethyst-200 border-amethyst-500/40',
+          icon: 'images/amethyst-sliver.png',
+          tier: 'Crafting Ingredient',
+          recipeText: '1 Amethyst Shard → 9 Amethyst Slivers',
+          craftable: true,
+          grid: ['', '', '', '', 'shard', '', '', '', ''],
+          stats: {
+            'Crafting Yield': '9 Slivers per Shard',
+            'Key Ingredient': 'Amethyst Shard',
+            'Used In': 'Amethyst Torch, Amethyst Lantern',
+            'Type': 'Crafting Ingredient'
+          },
+          description: 'A small crystal fragment split from an Amethyst Shard, used to craft Amethyst Torches and Lanterns.',
+          targetId: 'card-item-sliver',
+          keywords: 'sliver slivers ingredient material fragment shard nine torch lantern rarity uncommon'
+        },
+        {
+          id: 'torch',
+          isItem: true,
+          name: 'Amethyst Torch',
+          category: 'Light Source',
+          rarity: 'Uncommon',
+          rarityStyle: 'bg-amethyst-500/20 text-amethyst-200 border-amethyst-500/40',
+          icon: 'images/amethyst-torch.png',
+          tier: 'Light Source',
+          recipeText: '1 Amethyst Sliver + 1 Coal or Charcoal + 1 Stick',
+          craftable: true,
+          grid: ['', 'sliver', '', '', 'coal', '', '', 'stick', ''],
+          recipes: [
+            { label: 'With Coal', grid: ['', 'sliver', '', '', 'coal', '', '', 'stick', ''], text: '1 Amethyst Sliver + 1 Coal + 1 Stick → 4 Torches' },
+            { label: 'With Charcoal', grid: ['', 'sliver', '', '', 'charcoal', '', '', 'stick', ''], text: '1 Amethyst Sliver + 1 Charcoal + 1 Stick → 4 Torches' }
+          ],
+          stats: {
+            'Crafting Yield': '4 Torches per craft',
+            'Recipe Variants': 'Coal or Charcoal',
+            'Key Ingredient': 'Amethyst Sliver (1 Shard → 9 Slivers)',
+            'Advancement': 'Let There Be Light!'
+          },
+          description: 'A crystal-lit torch crafted from an Amethyst Sliver, available with either Coal or Charcoal.',
+          targetId: 'card-item-torch',
+          keywords: 'torch light lighting lamp glow illumination sliver coal charcoal rarity uncommon let there be light'
+        },
+        {
+          id: 'lantern',
+          isItem: true,
+          name: 'Amethyst Lantern',
+          category: 'Light Source',
+          rarity: 'Uncommon',
+          rarityStyle: 'bg-amethyst-500/20 text-amethyst-200 border-amethyst-500/40',
+          icon: 'images/amethyst-lantern.png',
+          tier: 'Light Source',
+          recipeText: '4 Iron Nuggets + 4 Amethyst Slivers + 1 Amethyst Torch',
+          craftable: true,
+          grid: ['nugget', 'sliver', 'nugget', 'sliver', 'torch', 'sliver', 'nugget', 'sliver', 'nugget'],
+          stats: {
+            'Crafting Yield': '1 Lantern per craft',
+            'Key Ingredient': 'Amethyst Torch',
+            'Frame': 'Iron Nuggets + Amethyst Slivers',
+            'Advancement': 'Let There Be More Light!'
+          },
+          description: 'An iron-framed lantern wrapped in Amethyst Slivers around a glowing Amethyst Torch.',
+          targetId: 'card-item-lantern',
+          keywords: 'lantern light lighting lamp glow illumination iron nugget sliver torch rarity uncommon let there be more light'
+        },
+        {
+          id: 'bulb',
+          isItem: true,
+          name: 'Amethyst Bulb',
+          category: 'Light Source',
+          rarity: 'Uncommon',
+          rarityStyle: 'bg-amethyst-500/20 text-amethyst-200 border-amethyst-500/40',
+          icon: 'images/amethyst-bulb.png',
+          tier: 'Light Source',
+          recipeText: '3 Amethyst Shards + 1 Amethyst Lantern + 1 Redstone Dust',
+          craftable: true,
+          grid: ['', 'shard', '', 'shard', 'lantern', 'shard', '', 'redstone', ''],
+          stats: {
+            'Crafting Yield': '1 Bulb per craft',
+            'Key Ingredient': 'Amethyst Lantern',
+            'Also Needs': 'Amethyst Shards + Redstone Dust',
+            'Advancement': 'Let There Be Even More Light!'
+          },
+          description: 'The top tier of the Amethyst lights, built from a Lantern, Amethyst Shards and Redstone Dust.',
+          targetId: 'card-item-bulb',
+          keywords: 'bulb light lighting lamp glow illumination lantern shard redstone dust rarity uncommon let there be even more light'
+        },
+        {
           id: 'fabric-api',
           isItem: false,
           name: 'Fabric API (Dependency)',
@@ -2041,16 +2289,16 @@
           isItem: false,
           name: 'Advancements Progression',
           category: 'Wiki Section',
-          rarity: '7 Milestones',
+          rarity: '11 Milestones',
           rarityStyle: 'bg-amethyst-500/20 text-amethyst-200 border-amethyst-500/40',
           icon: 'images/adv-root.png',
           tier: 'MC 26.1.2 – 26.3',
           recipeText: 'Rewarded for acquiring each item',
           craftable: false,
           grid: null,
-          description: 'Custom advancements unlocked as you collect Amethyst Shards, craft tools, wield the Dagger, and armor your mounts.',
+          description: 'Custom advancements unlocked as you collect Amethyst Shards, craft tools, wield the Dagger, armor your mounts, and light up the world with Amethyst torches, lanterns and bulbs.',
           targetId: 'advancements',
-          keywords: 'advancement achievements milestones tree progression'
+          keywords: 'advancement achievements milestones tree progression light torch lantern bulb lighten up'
         },
         {
           id: '3d-addon',
@@ -2071,16 +2319,23 @@
       ];
 
       // Helper to render crafting slot icon HTML
+      const SLOT_ICONS = {
+        shard: ['Amethyst Shard', 'images/item-amethyst-shard.png'],
+        stick: ['Stick', 'images/item-stick.png'],
+        sliver: ['Amethyst Sliver', 'images/amethyst-sliver.png'],
+        coal: ['Coal', 'images/coal.png'],
+        charcoal: ['Charcoal', 'images/charcoal.png'],
+        torch: ['Amethyst Torch', 'images/amethyst-torch.png'],
+        lantern: ['Amethyst Lantern', 'images/amethyst-lantern.png'],
+        nugget: ['Iron Nugget', 'images/iron-nugget.png'],
+        redstone: ['Redstone Dust', 'images/redstone-dust.png']
+      };
       function renderCraftingSlotHtml(slotKey, sizeClass = 'w-5 h-5') {
         if (!slotKey) return '<div class="mc-slot"></div>';
-        if (slotKey === 'shard') {
-          return `<div class="mc-slot mc-slot-filled" role="img" aria-label="Amethyst Shard">
-            <img src="images/item-amethyst-shard.png" alt="Amethyst Shard" class="${sizeClass} object-contain pixelated-art" onerror="this.style.opacity='0'" />
-          </div>`;
-        }
-        if (slotKey === 'stick') {
-          return `<div class="mc-slot mc-slot-filled" role="img" aria-label="Stick">
-            <img src="images/item-stick.png" alt="Stick" class="${sizeClass} object-contain pixelated-art" onerror="this.style.opacity='0'" />
+        const d = SLOT_ICONS[slotKey];
+        if (d) {
+          return `<div class="mc-slot mc-slot-filled" role="img" aria-label="${d[0]}" title="${d[0]}">
+            <img src="${d[1]}" alt="${d[0]}" class="${sizeClass} object-contain pixelated-art" onerror="this.style.opacity='0'" />
           </div>`;
         }
         return `<div class="mc-slot mc-slot-filled">${slotKey}</div>`;
@@ -2113,7 +2368,7 @@
       const GROUPS = ['All', 'Item', 'Recipe', 'Advancement', 'Guide', 'Media', 'Action', 'Link'];
       const groupOf = t => (t === 'Section' || t === 'Stats' ? 'Guide' : t);
       const SYN = {
-        sword: ['blade', 'dagger'], blade: ['sword', 'dagger'], armour: ['armor'], gem: ['shard', 'amethyst'], crystal: ['amethyst'],
+        light: ['torch', 'lantern', 'bulb'], lights: ['torch', 'lantern', 'bulb'], lamp: ['lantern', 'bulb'], glow: ['light', 'torch'], bright: ['bulb', 'light'], sword: ['blade', 'dagger'], blade: ['sword', 'dagger'], armour: ['armor'], gem: ['shard', 'amethyst'], crystal: ['amethyst'],
         hp: ['health', 'hearts'], hearts: ['damage'], dmg: ['damage'], hit: ['damage'], dura: ['durability'], mount: ['horse', 'nautilus'],
         mounts: ['horse', 'nautilus'], helm: ['helmet'], chest: ['chestplate'], pants: ['leggings'], shoes: ['boots'],
         help: ['discord', 'issues', 'community'], bug: ['issues', 'github'], bugs: ['issues', 'github'], download: ['modrinth'],
@@ -2132,7 +2387,7 @@
       }
       WIKI_INDEX.forEach(it => addEntry({
         type: it.isItem ? 'Item' : 'Guide', title: it.name, sub: it.isItem ? `${it.category} • ${it.rarity}` : it.category,
-        text: [it.description, it.recipeText, it.tier, ...Object.entries(it.stats || {}).map(([k, v]) => k + ' ' + v)].join(' '),
+        text: [it.description, it.recipeText, it.tier, ...(it.recipes || []).map(r => r.text), ...Object.entries(it.stats || {}).map(([k, v]) => k + ' ' + v)].join(' '),
         keywords: (it.keywords || '') + ' ' + it.rarity + (it.isItem ? ' recipe crafting stats attributes' : ''), icon: it.icon, target: it.targetId, item: it.isItem ? it : null, boost: it.isItem ? 12 : 0
       }));
       document.querySelectorAll('.wiki-section').forEach(sec => {
@@ -2170,10 +2425,10 @@
       });
 
       // Recipes: one entry per craftable item (searchable by ingredient, e.g. "stick", "shard")
-      const INGR = { shard: 'Amethyst Shard', stick: 'Stick', horse: 'Horse Armor', nautilus: 'Nautilus Armor' };
+      const INGR = { shard: 'Amethyst Shard', stick: 'Stick', sliver: 'Amethyst Sliver', coal: 'Coal', charcoal: 'Charcoal', torch: 'Amethyst Torch', lantern: 'Amethyst Lantern', nugget: 'Iron Nugget', redstone: 'Redstone Dust', horse: 'Horse Armor', nautilus: 'Nautilus Armor' };
       WIKI_INDEX.filter(it => it.isItem && it.recipeText).forEach(it => addEntry({
         type: 'Recipe', title: it.name + ' Recipe', sub: it.recipeText,
-        text: 'crafting recipe ingredients crafted from ' + it.recipeText + ' ' + (it.grid || []).filter(Boolean).map(g => INGR[g] || g).join(' '),
+        text: 'crafting recipe ingredients crafted from ' + it.recipeText + ' ' + (it.recipes ? it.recipes.map(r => r.text + ' ' + r.grid.filter(Boolean).map(g => INGR[g] || g).join(' ')).join(' ') : (it.grid || []).filter(Boolean).map(g => INGR[g] || g).join(' ')),
         keywords: 'recipe craft crafting ingredients how to make ' + it.name, icon: it.icon, target: it.targetId, item: it, boost: 8
       }));
       // Media: gallery panels + comparison slider
@@ -2282,7 +2537,7 @@
       const isOpen = () => slot.classList.contains('is-open');
       const rowEls = () => [...listEl.querySelectorAll('.island-row')];
 
-      const TICKS = ['amethyst dagger', 'nautilus armor recipe', 'durability', 'fabric api', 'advancements', 'rarity', 'roadmap', 'discord'];
+      const TICKS = ['amethyst dagger', 'amethyst lantern', 'nautilus armor recipe', 'durability', 'fabric api', 'advancements', 'rarity', 'roadmap', 'discord'];
       track.innerHTML = [...TICKS, TICKS[0]].map(t => `<div>Try “${esc(t)}”</div>`).join('');
       let ti = 0;
       setInterval(() => {
@@ -2393,6 +2648,7 @@
         const jump = ev && (ev.shiftKey || ev.metaKey || ev.ctrlKey);
         saveRecent(input.value.trim());
         if (e.item && !jump) {
+          pendingRecipe = e.recipeIndex || 0;
           openItemMorphModal(e.item, rowEl, rowEl.getBoundingClientRect());
           closeIsland(true);
         } else if (e.run) {
@@ -2454,14 +2710,20 @@
       let mState = 'closed', mSource = null, mItem = null;
       const fin = {};
 
+      let pendingRecipe = 0;
+      const recipeBody = r => (r.grid
+        ? `<div class="grid grid-cols-3 gap-1.5 w-36 mx-auto">${r.grid.map(s => renderCraftingSlotHtml(s, 'w-7 h-7')).join('')}</div>`
+        : `<div class="text-xs text-amethyst-200 text-center py-4">${r.text}</div>`)
+        + `<div class="mt-3 text-[11px] font-mono text-modrinth-muted text-center min-h-[2.25rem]">${r.text}</div>`;
+
       function buildDetail(item) {
+        const recipes = item.recipes || [{ label: '', grid: item.grid, text: item.recipeText }];
+        const ri = Math.min(pendingRecipe, recipes.length - 1); pendingRecipe = 0;
+        const tabs = recipes.length > 1 ? `<div class="flex flex-wrap justify-center gap-1.5 mb-3">${recipes.map((r, i) => `<button type="button" class="recipe-tab${i === ri ? ' is-active' : ''}" data-i="${i}">${r.label}</button>`).join('')}</div>` : '';
         const rows = Object.entries(item.stats || {}).map(([l, v], n) => `
           <div class="mm-rise flex items-center justify-between gap-3 py-2 border-b border-modrinth-border/80 last:border-b-0 text-xs" style="--i:${n + 3}">
             <span class="text-modrinth-muted font-medium">${l}</span><span class="text-white font-mono font-semibold text-right">${v}</span>
           </div>`).join('');
-        const grid = item.grid
-          ? `<div class="grid grid-cols-3 gap-1.5 w-36 mx-auto">${item.grid.map(s => renderCraftingSlotHtml(s, 'w-7 h-7')).join('')}</div>`
-          : `<div class="text-xs text-amethyst-200 text-center py-4">${item.recipeText}</div>`;
         return `
           <div class="mm-rise flex items-start justify-between gap-4 pb-4 mb-5 border-b border-modrinth-border" style="--i:0">
             <div class="flex items-center gap-4">
@@ -2483,8 +2745,8 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
             <div class="mm-rise sm:col-span-5 rounded-2xl bg-modrinth-bg border border-modrinth-border p-4 flex flex-col items-center justify-center" style="--i:1">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-amethyst-300 mb-3">Crafting Recipe</span>${grid}
-              <div class="mt-3 text-[11px] font-mono text-modrinth-muted text-center">${item.recipeText}</div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-amethyst-300 mb-3">Crafting Recipe</span>${tabs}
+              <div class="recipe-stage w-full">${recipeBody(recipes[ri])}</div>
             </div>
             <div class="mm-rise sm:col-span-7 rounded-2xl bg-modrinth-bg border border-modrinth-border p-4" style="--i:2">
               <span class="text-[11px] font-bold uppercase tracking-wider text-amethyst-300 block mb-2">Attributes &amp; Stats</span>${rows}
@@ -2575,6 +2837,20 @@
       }
 
       backdrop.addEventListener('click', closeItemMorphModal);
+      // Recipe tabs inside the pop-up (items with more than one recipe)
+      detail.addEventListener('click', e => {
+        const b = e.target.closest('.recipe-tab');
+        const stage = detail.querySelector('.recipe-stage');
+        if (!b || !stage || !mItem || !mItem.recipes || b.classList.contains('is-active')) return;
+        detail.querySelectorAll('.recipe-tab').forEach(t => t.classList.toggle('is-active', t === b));
+        const r = mItem.recipes[+b.dataset.i];
+        if (RM) { stage.innerHTML = recipeBody(r); return; }
+        const out = stage.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 110, fill: 'forwards' });
+        out.finished.then(() => {
+          stage.innerHTML = recipeBody(r); out.cancel();
+          stage.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: EASE });
+        }).catch(() => {});
+      });
       const scrollGuard = e => { if (mState === 'closed') return; if (e.target.closest && e.target.closest('.mm-detail')) return; e.preventDefault(); };
       window.addEventListener('wheel', scrollGuard, { passive: false });
       window.addEventListener('touchmove', scrollGuard, { passive: false });
